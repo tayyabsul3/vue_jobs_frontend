@@ -1,10 +1,10 @@
 <script setup>
-import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
-import BackButton from '@/components/BackButton.vue';
-import { reactive, onMounted } from 'vue';
-import { useRoute, RouterLink, useRouter } from 'vue-router';
-import { useToast } from 'vue-toastification';
-import axios from 'axios';
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+import BackButton from "@/components/BackButton.vue";
+import { reactive, onMounted } from "vue";
+import { useRoute, RouterLink, useRouter } from "vue-router";
+import { useToast } from "vue-toastification";
+import axios from "axios";
 
 const route = useRoute();
 const router = useRouter();
@@ -19,24 +19,28 @@ const state = reactive({
 
 const deleteJob = async () => {
   try {
-    const confirm = window.confirm('Are you sure you want to delete this job?');
+    const confirm = window.confirm("Are you sure you want to delete this job?");
     if (confirm) {
-      await axios.delete(`/api/jobs/${jobId}`);
-      toast.success('Job Deleted Successfully');
-      router.push('/jobs');
+      await axios.delete(
+        `https://vue-jobs-backend-ochre.vercel.app/jobs/${jobId}`
+      );
+      toast.success("Job Deleted Successfully");
+      router.push("/jobs");
     }
   } catch (error) {
-    console.error('Error deleting job', error);
-    toast.error('Job Not Deleted');
+    console.error("Error deleting job", error);
+    toast.error("Job Not Deleted");
   }
 };
 
 onMounted(async () => {
   try {
-    const response = await axios.get(`/api/jobs/${jobId}`);
+    const response = await axios.get(
+      `https://vue-jobs-backend-ochre.vercel.app/jobs/${jobId}`
+    );
     state.job = response.data;
   } catch (error) {
-    console.error('Error fetching job', error);
+    console.error("Error fetching job", error);
   } finally {
     state.isLoading = false;
   }
